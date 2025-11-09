@@ -1,11 +1,12 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <List.h>
+typedef struct Node Node;
 
 typedef struct Queue Queue;
 struct Queue{
-    List *Head;
+    Node *head;
+    Node *tail;
 };
 
 Queue *QueueCreate();

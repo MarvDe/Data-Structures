@@ -10,13 +10,16 @@ int main(int argc, char *argv[]){
 
 
 void PrintInt(void *integer){
-    if (integer == NULL) return;
+    if (integer == NULL) {
+        printf("NULL\n");
+        return;
+    }
     printf("%d\n", *(int *)integer);
 }
 
 void ListTest(){
 
-    int a[] = {1};
+    int a[] = {1,2,3,4,5,6};
 
     List *list = ListCreate();
     for (int i = 0; i < sizeof(a) / sizeof(int); i++){
@@ -30,7 +33,6 @@ void ListTest(){
     ListRemove(list, 0);
     ListTraverseAndApply(list, PrintInt);
 
-    
     printf("Inserting 100 At Index 0\n");
     int b = 100;
     ListInsert(list, &b, 0, 0);

@@ -8,6 +8,9 @@ struct Node {
     struct Node *next;
 };
 
+void NodeDestroy(Node *node);
+void NodeDestroyRec(Node *node);
+
 List *ListCreate(){
     List *list = malloc(sizeof(List));
     list->next = NULL;
@@ -28,30 +31,41 @@ Node *NodeGet(Node *node, size_t index){
 }
 
 Node *NodeGetLast(Node *node){
-    if (node->next == NULL) return node;
+    if (node == NULL || node->next == NULL) return node;
     NodeGetLast(node->next);
 }
 
 void NodeDestroy(Node *node){
     if (node == NULL) return;
-    NodeDestroy(node->next);
     if (node->ownsData) free(node->data);
     free(node);
 }
 
+void NodeDestroyRec(Node *node){
+    if (node == NULL) return;
+    NodeDestroyRec(node->next);
+    NodeDestroy(node);
+}
+
+void *NodeGetData(Node *node){
+    if (node == NULL) return NULL;
+    node->ownsData = 0;
+    return node->data;
+}
+
 void ListDestroy(List *list){
     if (list == NULL) return;
-    NodeDestroy(list->next);
+    NodeDestroyRec(list->next);
 }
 
 void *ListGet(List *list, size_t index){
     if (list == NULL) return NULL;
-    return NodeGet(list->next, index)->data;
+    return NodeGetData(NodeGet(list->next, index));
 }
 
 void *ListGetLast(List *list){
     if (list == NULL) return NULL;
-    return NodeGetLast(list->next)->data;
+    return NodeGetData(NodeGetLast(list->next));
 }
 
 void ListAppend(List *list, void *data, char ownsData){
@@ -102,28 +116,37 @@ void *ListRemove(List *list, size_t index){
         if (list->next == NULL) return NULL;
         Node *nodeCurrent = list->next;
         list->next = list->next->next;
-        return nodeCurrent->data;
+        void *data = NodeGetData(nodeCurrent);
+        NodeDestroy(nodeCurrent);
+        return data;
     }
     else{
-       Node *nodePrev = NodeGet(list->next, index-1); 
-       if (nodePrev == NULL || nodePrev->next == NULL) return NULL;
-       Node *nodeCurrent = nodePrev->next;
-       nodePrev->next = nodePrev->next->next;
-       return nodeCurrent->data;
+        Node *nodePrev = NodeGet(list->next, index-1); 
+        if (nodePrev == NULL || nodePrev->next == NULL) return NULL;
+        Node *nodeCurrent = nodePrev->next;
+        nodePrev->next = nodePrev->next->next;
+        void *data = NodeGetData(nodeCurrent);
+        NodeDestroy(nodeCurrent);
+        return data;
     }
 }
 
 void *ListRemoveLast(List *list){
     if (list == NULL || list->next == NULL) return NULL;
+    if (list->next->next == NULL){
+        Node *nodeCurrent = list->next;
+        list->next = NULL;
+        void *data = NodeGetData(nodeCurrent);
+        NodeDestroy(nodeCurrent);
+        return data;
+    }
     Node *nodePrev = list->next;
-    if (nodePrev->next == NULL){
-
-        list->next = NULL; 
-    } 
     while (nodePrev->next->next != NULL) nodePrev = nodePrev->next; 
     Node *nodeCurrent = nodePrev->next;
     nodePrev->next = NULL;
-    return nodeCurrent->data;
+    void *data = NodeGetData(nodeCurrent);
+    NodeDestroy(nodeCurrent);
+    return data;
 }
 
 void ListTraverseAndApply(List *list, void (*func)(void *)){
