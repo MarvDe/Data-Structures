@@ -17,8 +17,10 @@ void ListInsert(List *list, void *data, char ownsData, size_t index);
 void *ListGet(List *list, size_t index);
 void *ListGetLast(List *list);
 size_t ListLength(List *list);
-void *ListRemove(List *list, size_t index);
-void *ListRemoveLast(List *list);
+void ListRemove(List *list, size_t index);
+void ListRemoveLast(List *list);
+void *ListRemoveAndGet(List *list, size_t index);
+void *ListRemoveAndGetLast(List *list);
 void ListTraverseAndApply(List *list, void (*func)(void *));
 
 #endif

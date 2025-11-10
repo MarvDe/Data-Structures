@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <List.h>
+#include <Queue.h>
 
 void ListTest();
+void QueueTest();
 
 int main(int argc, char *argv[]){
-    ListTest();
+    //ListTest();
+    //QueueTest();
+    
     return 0;
 }
 
@@ -25,7 +29,7 @@ void ListTest(){
     for (int i = 0; i < sizeof(a) / sizeof(int); i++){
         ListAppend(list, a + i, 0);
     }
-
+    
     printf("Printing List: \n");
     ListTraverseAndApply(list, PrintInt);
     
@@ -50,5 +54,48 @@ void ListTest(){
 
     printf("Length Of List: \n");
     printf("%llu\n", ListLength(list));
+
+    printf("Removing And Showing Last Element: \n");
+    PrintInt(ListRemoveAndGetLast(list));
+
+    printf("Removing And Showing Second: \n");
+    PrintInt(ListRemoveAndGet(list, 1));
+
+    printf("Removing And Showing First: \n");
+    PrintInt(ListRemoveAndGet(list, 0));
+
+    printf("Final List: \n");
+    ListTraverseAndApply(list, PrintInt);
+
+}
+
+void QueueTest(){
+
+    int a[] = {1,2,3,4,5,6,7,8,9,10};
+    Queue *queue = QueueCreate();
     
+    printf("Enqueue Data: \n");
+    for (int i = 0; i < sizeof(a) / sizeof(int); i++){
+        Enqueue(queue, a + i, 0);
+    }
+
+    printf("Dequeue First Five Elements: \n");
+    for (int i = 0; i < 5; i++){
+        PrintInt(Dequeue(queue));
+    }
+
+    printf("Enqueue 100: \n");
+    int b = 100;
+    Enqueue(queue, &b, 0);
+
+    printf("Deqeue Six Elements: \n");
+    for (int i = 0; i < 6; i++){
+        PrintInt(Dequeue(queue));
+    }
+
+    printf("Dequeue Empty Queue: \n");
+    PrintInt(Dequeue(queue));
+
+    QueueDestroy(queue);
+
 }

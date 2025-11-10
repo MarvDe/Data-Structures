@@ -69,9 +69,13 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/DLList.o
 GENERATED += $(OBJDIR)/List.o
+GENERATED += $(OBJDIR)/Queue.o
 GENERATED += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/DLList.o
 OBJECTS += $(OBJDIR)/List.o
+OBJECTS += $(OBJDIR)/Queue.o
 OBJECTS += $(OBJDIR)/main.o
 
 # Rules
@@ -136,7 +140,13 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/DLList.o: ../src/DLList.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/List.o: ../src/List.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Queue.o: ../src/Queue.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: ../src/main.c

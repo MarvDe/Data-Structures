@@ -110,7 +110,30 @@ size_t ListLength(List *list){
     return length;
 }
 
-void *ListRemove(List *list, size_t index){
+void ListRemove(List *list, size_t index){
+    if (list == NULL) return;
+    if (index == 0){
+        if (list->next == NULL) return;
+        list->next = list->next->next;
+    }
+    else{
+        Node *nodePrev = NodeGet(list->next, index-1); 
+        if (nodePrev == NULL || nodePrev->next == NULL) return;
+        nodePrev->next = nodePrev->next->next;
+    }
+}
+
+void ListRemoveLast(List *list){
+    if (list == NULL || list->next == NULL) return;
+    if (list->next->next == NULL){
+        list->next = NULL;
+    }
+    Node *nodePrev = list->next;
+    while (nodePrev->next->next != NULL) nodePrev = nodePrev->next;
+    nodePrev->next = NULL;
+}
+
+void *ListRemoveAndGet(List *list, size_t index){
     if (list == NULL) return NULL;
     if (index == 0){
         if (list->next == NULL) return NULL;
@@ -131,7 +154,7 @@ void *ListRemove(List *list, size_t index){
     }
 }
 
-void *ListRemoveLast(List *list){
+void *ListRemoveAndGetLast(List *list){
     if (list == NULL || list->next == NULL) return NULL;
     if (list->next->next == NULL){
         Node *nodeCurrent = list->next;

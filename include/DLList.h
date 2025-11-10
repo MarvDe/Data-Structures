@@ -4,7 +4,7 @@
 
 typedef struct DLList DLList;
 struct DLList{
-    struct Node *next;
+    struct DLNode *next;
 };
 
 
