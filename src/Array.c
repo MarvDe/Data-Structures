@@ -22,9 +22,10 @@ void *ArrayGet(Array *array, size_t index){
     return array->data + array->sizeOfElements * index;
 }
 
-void ArraySet(Array *array, void *element, size_t index){
+void ArraySet(Array *array, void *element, size_t numOfElements, size_t index){
     if (array == NULL || array->numOfElements <= index) return;
-    memcpy(ArrayGet(array, index), element, array->sizeOfElements);
+    if (array->numOfElements < index + numOfElements) ArrayResize(array, index + numOfElements);
+    memcpy(ArrayGet(array, index), element, array->sizeOfElements * numOfElements);
 }
 
 void ArrayResize(Array *array, size_t newNumOfElements){

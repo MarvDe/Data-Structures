@@ -14,7 +14,7 @@ struct Array{
 Array *ArrayCreate(size_t numOfElements, size_t sizeOfElements);
 void ArrayDestroy(Array *array);
 void *ArrayGet(Array *array, size_t index);
-void ArraySet(Array *array, void *element, size_t index);
+void ArraySet(Array *array, void *element, size_t numOfElements, size_t index);
 void ArrayResize(Array *array, size_t newNumOfElements);
 
 

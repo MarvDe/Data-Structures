@@ -8,7 +8,7 @@ obj/Debug/main.o: ../src/main.c C:/msys64/mingw64/include/stdio.h \
  C:/msys64/mingw64/include/_mingw_off_t.h \
  C:/msys64/mingw64/include/swprintf.inl \
  C:/msys64/mingw64/include/sec_api/stdio_s.h ../include/List.h \
- ../include/Queue.h
+ ../include/Queue.h ../include/Array.h ../include/DLList.h
 C:/msys64/mingw64/include/stdio.h:
 C:/msys64/mingw64/include/corecrt_stdio_config.h:
 C:/msys64/mingw64/include/corecrt.h:
@@ -22,3 +22,5 @@ C:/msys64/mingw64/include/swprintf.inl:
 C:/msys64/mingw64/include/sec_api/stdio_s.h:
 ../include/List.h:
 ../include/Queue.h:
+../include/Array.h:
+../include/DLList.h:
