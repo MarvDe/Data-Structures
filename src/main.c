@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <List.h>
 #include <Queue.h>
+#include <Array.h>
 
 void ListTest();
 void QueueTest();
+void ArrayTest();
 
 int main(int argc, char *argv[]){
     //ListTest();
@@ -98,4 +100,17 @@ void QueueTest(){
 
     QueueDestroy(queue);
 
+}
+
+void ArrayTest(){
+    Array *array = ArrayCreate(10, sizeof(int));
+    printf("First Element: \n");
+    PrintInt(ArrayGet(array, 0));
+    printf("Set Second Element To 100: \n");
+    int b = 100;
+    ArraySet(array, &b, 1);
+    for (int i = 0; i < array->numOfElements; i++){
+        PrintInt(ArrayGet(array, i));  
+    }
+    ArrayDestroy(array);
 }
